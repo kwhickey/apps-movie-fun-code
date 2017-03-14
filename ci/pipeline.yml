@@ -1,0 +1,48 @@
+---
+resources:
+- name: git-src
+  type: git
+  source:
+    uri: https://github.com/kwhickey/apps-movie-fun-code.git
+    branch: lab/pipeline
+
+- name: cf-deploy
+  type: cf
+  source:
+    api: api.run-01.haas-66.pez.pivotal.io
+    username: {{cf-user}}
+    password: {{cf-password}}
+    organization: khickey-pal
+    space: sandbox
+    skip_cert_check: true
+
+jobs:
+- name: package-and-deploy
+  public: true
+  plan:
+  - get: git-src
+    trigger: true
+  - task: package
+    file: git-src/ci/tasks/package.yml
+  - put: cf-deploy
+    params:
+      manifest: git-src/manifest.yml
+      path: package-output/moviefun.war
+
+- name: smoke-test
+  public: true
+  plan:
+  - get: git-src
+    trigger: true
+    passed: [package-and-deploy]
+  - aggregate:
+    - task: smoke-test-shpec
+      file: git-src/ci/tasks/smoke-test-shpec.yml
+      params:
+        APP_DOMAIN: {{cf-domain}}
+        APP_HOSTNAME: {{cf-hostname}}
+    - task: smoke-test-java
+      file: git-src/ci/tasks/smoke-test-java.yml
+      params:
+        APP_DOMAIN: {{cf-domain}}
+        APP_HOSTNAME: {{cf-hostname}}

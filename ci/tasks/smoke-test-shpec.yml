@@ -1,0 +1,18 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: ubuntu
+    tag: "latest"
+
+params:
+  APP_DOMAIN:
+  APP_HOSTNAME:
+
+inputs:
+- name: git-src
+
+run:
+  path: git-src/ci/tasks/smoke-test.sh

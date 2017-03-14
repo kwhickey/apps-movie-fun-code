@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+if [ $# -ne 1 ]; then
+  echo "Invalid usage"
+  echo "usage: $0 app_url"
+  exit 1
+fi
+
+set -x
+export APP_URL=$1
+
+BIN_DIR=$(cd $(dirname "$0") && pwd)
+$BIN_DIR/shpec

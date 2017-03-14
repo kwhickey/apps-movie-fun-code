@@ -1,0 +1,11 @@
+applications:
+- name: movie-fun
+  instances: 1
+  memory: 1024M
+  disk_quota: 1024M
+  domain: cfapps-01.haas-66.pez.pivotal.io
+  host: kwhickey-movie-fun
+  stack: cflinuxfs2
+  path: target/moviefun.war
+  services:
+    - movie-fun-mysql

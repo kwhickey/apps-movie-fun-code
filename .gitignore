@@ -3,3 +3,8 @@ target
 classes
 build
 .idea
+.DS_Store
+private.yml
+
+# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
+!/.mvn/wrapper/maven-wrapper.jar

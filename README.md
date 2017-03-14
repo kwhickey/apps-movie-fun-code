@@ -1,14 +1,15 @@
-# Attendee Service Smoke Tests
+# Movie Fun!
 
-These tests will test that the attendee service has been successfully deployed.
-They do not rely on any specific data, and therefore should work against any
-deployed instance of the application.
+Smoke Tests require server running on port 8080 by default.
 
-## Usage
+## Build WAR ignoring Smoke Tests
 
-`bin/test <attendee_service_url>` where `<attendee_service_url>` is the base url of the
-attendee service application you'd like to test. For example:
+```
+$ mvn clean package -DskipTests -Dmaven.test.skip=true
+```
 
-```bash
-bin/test http://localhost:8181
+## Run Smoke Tests against specific URL
+
+```
+$ MOVIE_FUN_URL=http://moviefun.example.com mvn test
 ```

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e +x
+set -ex
 
 sourcedir=git-src
 outputdir=package-output
@@ -13,7 +13,7 @@ echo "VARIABLES:
 
 pushd $sourcedir
   echo "Packaging WAR"
-  ./mvnw clean package -DskipTests -Dmaven.test.skip=true
+  ./mvnw --batch-mode clean package -DskipTests -Dmaven.test.skip=true
 popd
 
 jar_count=`find $sourcedir/target -type f -name *.war | wc -l`

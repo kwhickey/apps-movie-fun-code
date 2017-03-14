@@ -16,7 +16,7 @@ export MOVIE_FUN_URL="http://${APP_HOSTNAME}.${APP_DOMAIN}"
 
 pushd git-src
   echo "Running java smoke tests for App deployed at: $MOVIE_FUN_URL"
-  ./mvnw test
+  ./mvnw --batch-mode test
 popd
 
 exit 0

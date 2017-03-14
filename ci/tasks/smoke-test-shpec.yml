@@ -4,7 +4,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: ubuntu
+    repository: alpine
     tag: "latest"
 
 params:
@@ -15,4 +15,4 @@ inputs:
 - name: git-src
 
 run:
-  path: git-src/ci/tasks/smoke-test.sh
+  path: git-src/ci/tasks/smoke-test-shpec.sh

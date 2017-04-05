@@ -16,7 +16,6 @@ import org.superbiz.moviefun.moviesapi.MovieServlet;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableDiscoveryClient
 public class Application {
 
     public static void main(String... args) {

@@ -1,0 +1,19 @@
+---
+inherit: ../../manifest.yml
+applications:
+- name: movie-fun-app
+  path: build/libs/movie-fun-app-1.1.0-SNAPSHOT.war
+  host: movie-fun-app-kwh
+
+
+
+
+
+
+
+
+
+
+
+
+

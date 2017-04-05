@@ -1,0 +1,10 @@
+---
+inherit: ../../manifest.yml
+applications:
+- name: album-service
+  path: build/libs/album-service-1.1.0-SNAPSHOT.jar
+  host: album-service-kwh
+  services:
+  - album-database
+  env:
+    GRANT_TYPE: client_credentials

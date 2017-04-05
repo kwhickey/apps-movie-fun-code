@@ -23,6 +23,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-tomcat"
     compile "org.springframework.cloud:spring-cloud-starter-oauth2"
+    compile "org.springframework.cloud:spring-cloud-starter-eureka"
     compile "org.springframework.security:spring-security-taglibs:$springSecurityVersion"
 
     compile "io.pivotal.spring.cloud:spring-cloud-sso-connector:$springCloudSsoVersion"
@@ -33,6 +34,12 @@ dependencies {
     compile "javax.servlet:jstl:1.2"
 
     compile "org.apache.tomcat.embed:tomcat-embed-jasper:8.5.6"
-
     testCompile "junit:junit:$junitVersion"
+}
+
+task deploy(type: Exec) {
+    commandLine "cf", "push", "-d", cfDomain
+    ext.output = {
+        return standardOutput.toString()
+    }
 }

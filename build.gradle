@@ -12,6 +12,9 @@ buildscript {
         slf4jVersion = "1.7.21"
         junitVersion = "4.12"
         mysqlVersion = "5.1.40"
+
+        isPws = false
+        cfDomain = "cfapps-01.haas-66.pez.pivotal.io"
     }
 
     repositories {
@@ -58,34 +61,53 @@ task dependenciesGraph(dependsOn: "dependenciesGraphDot", type: Exec) {
     commandLine "dot", "-O", "-Tpng", "graph.dot"
 }
 
+
+
 task clean(type: Delete) {
     delete "build"
 }
 
 defaultTasks "clean", "build", "dependenciesGraph"
 
-task deploy {
-    doLast {
-        "cf push".execute().in.eachLine { line ->
-            println line
-        }
+//task deploy {
+//    doLast {
+//        "cf push".execute().in.eachLine { line ->
+//            println line
+//        }
+//    }
+//}
+
+task checkIsPws {
+    println "Checking if running in PWS. Current/Default value is ${isPws}"
+    def api = "cf target | grep 'API endpoint:'".execute().text
+    isPws = api.contains("api.run.pivotal.io")
+    if (isPws) {
+        cfDomain = "cfapps.io"
     }
+    println "Finished checking if running in PWS. Result is ${isPws}"
 }
 
-task setupPcfEnv {
+task setupPcfEnv(dependsOn: "checkIsPws") {
+    def mysqlSvc = isPws ? 'cleardb' : 'p-msql'
+    def mysqlPlan = isPws ? 'spark' : '100mb'
+
     doLast {
-        [
-            "cf create-service p-mysql 100mb movie-database",
-            "cf create-service p-mysql 100mb album-database",
+        def cmds = [
+            "cf create-service ${mysqlSvc} ${mysqlPlan} movie-database",
+            "cf create-service ${mysqlSvc} ${mysqlPlan} album-database",
             "cf create-service p-identity auth-domain movie-fun-sso",
             "cf create-service p-service-registry standard movie-fun-registry"
-        ].each { println it.execute().text }
+        ]
+        if (isPws) {
+            cmds.removeAll { it.toLowerCase().contains('p-identity') }
+        }
+        cmds.each { println it.execute().text }
     }
 }
 
-task teardownPcfEnv {
+task teardownPcfEnv(dependsOn: "checkIsPws") {
     doLast {
-        [
+        def cmds = [
             "cf delete -f album-service",
             "cf delete -f movie-service",
             "cf delete -f movie-fun-app",
@@ -93,6 +115,10 @@ task teardownPcfEnv {
             "cf delete-service -f album-database",
             "cf delete-service -f movie-fun-sso",
             "cf delete-service -f movie-fun-registry",
-        ].each { println it.execute().text }
+        ]
+        if (isPws) {
+            cmds.removeAll { it.toLowerCase().contains('sso') }
+        }
+        cmds.each { println it.execute().text }
     }
 }

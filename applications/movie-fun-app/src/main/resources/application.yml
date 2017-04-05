@@ -16,6 +16,12 @@ spring:
 logging.level:
   root: WARN
   org.superbiz.moviefun: DEBUG
+  org.springframework.cloud.netflix.ribbon: DEBUG
+  com.netflix.ribbon: DEBUG
+  com.netflix.discovery: DEBUG
+  org.springframework.cloud.netflix.archaius: DEBUG
+  org.springframework.cloud.client.loadbalancer: DEBUG
+  org.springframework.security: DEBUG
 
 s3:
   accessKey: <access key id>
@@ -30,3 +36,20 @@ movies:
 security:
   basic:
     enabled: false
+---
+spring:
+  profiles: cloud
+
+#ribbon:
+#  IsSecure: true
+
+security:
+  oauth2:
+    client:
+      clientId: 9a6b5fd1d0cb72660103
+      clientSecret: 926b6bf8477b76d2f204643e926b48d4a38395be
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://api.github.com/user

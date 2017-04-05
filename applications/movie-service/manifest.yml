@@ -1,0 +1,10 @@
+---
+inherit: ../../manifest.yml
+applications:
+- name: movie-service
+  path: build/libs/movie-service-1.1.0-SNAPSHOT.jar
+  host: movie-service-kwh
+  services:
+  - movie-database
+  env:
+    GRANT_TYPE: client_credentials

@@ -24,3 +24,26 @@ s3:
 security:
   basic:
     enabled: false
+---
+spring:
+  profiles: cloud
+#eureka:
+#  instance:
+#    nonSecurePort: 80
+#    nonSecurePortEnabled: false
+#    securePortEnabled: true
+#    securePort: 443
+#    secureVirtualHostName: ${spring.application.name}
+#    hostname: ${vcap.application.uris[0]}
+#    preferIpAddress: true
+
+security:
+  oauth2:
+    client:
+      clientId: 9a6b5fd1d0cb72660103
+      clientSecret: 926b6bf8477b76d2f204643e926b48d4a38395be
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://api.github.com/user

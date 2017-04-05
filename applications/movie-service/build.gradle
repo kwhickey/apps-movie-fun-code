@@ -27,3 +27,10 @@ dependencies {
 
     compile "mysql:mysql-connector-java:$mysqlVersion"
 }
+
+task deploy(type: Exec) {
+    commandLine "cf", "push", "-d", cfDomain
+    ext.output = {
+        return standardOutput.toString()
+    }
+}

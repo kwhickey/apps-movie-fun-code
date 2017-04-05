@@ -1,5 +1,22 @@
 subprojects {
+//    task deploy {
+//    doLast {
+//        "cf push".execute().in.eachLine { line ->
+//            println line
+//        }
+//    }
+//}
 //    task deploy(type: Exec) {
 //        comandLine "cf", "push"
 //    }
 }
+
+//task deploy(type: Exec) {
+//    subprojects.each { subproject ->
+//        workingDir subproject.buildDir
+//        commandLine "cf", "push"
+//        ext.output = {
+//            return standardOutput.toString()
+//        }
+//    }
+//}

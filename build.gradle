@@ -15,6 +15,7 @@ buildscript {
 
         isPws = false
         cfDomain = "cfapps-01.haas-66.pez.pivotal.io"
+        cfMysqlSvc = "p-mysql"
     }
 
     repositories {
@@ -83,6 +84,7 @@ task checkIsPws {
     isPws = api.contains("api.run.pivotal.io")
     if (isPws) {
         cfDomain = "cfapps.io"
+        cfMysqlSvc = "cleardb"
     }
     println "Finished checking if running in PWS. Result is ${isPws}"
 }

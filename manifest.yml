@@ -7,3 +7,7 @@ services:
 - movie-fun-registry
 env:
   TRUST_CERTS: api.cfapps-01.haas-66.pez.pivotal.io,basic-sso.login.run-01.haas-66.pez.pivotal.io
+  S3_ENDPOINTURL: http://s3.amazonaws.com
+  S3_ACCESSKEY: AKIAJT36K5JFHDW4V74Q
+  S3_SECRETKEY: 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
+  S3_BUCKETNAME: cf-a654c8ab-7835-4d04-9ef6-241002a9d3ef

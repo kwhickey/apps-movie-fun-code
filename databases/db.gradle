@@ -17,7 +17,7 @@ def getMysqlCredentials(cfAppName) {
             .split("VCAP_APPLICATION")[0][0..-4]
     )["VCAP_SERVICES"]
 
-    return vcapServices?.getAt("p-mysql")?.getAt(0)?.getAt("credentials")
+    return vcapServices?.getAt("${cfMysqlSvc}")?.getAt(0)?.getAt("credentials")
 }
 
 ext.setupProdFlywayExtension = { extension, cfAppName ->

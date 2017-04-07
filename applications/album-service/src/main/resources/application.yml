@@ -10,13 +10,15 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/albums?useSSL=false
     username: root
-    password: root
 
 logging.level:
   root: WARN
   org.superbiz.moviefun: DEBUG
+  org.hibernate.SQL: DEBUG
+  org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 s3:
+  endpointUrl: <endpoint URL>
   accessKey: <access key id>
   secretKey: <secret access key>
   bucketName: <name of the bucket>
@@ -24,9 +26,34 @@ s3:
 security:
   basic:
     enabled: false
+  oauth2:
+    client:
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+      clientAuthenticationScheme: form
+    resource:
+      userInfoUri: https://api.github.com/user
+
+---
+spring:
+  profiles: development
+
+security:
+  oauth2:
+    client: # Register a new GitHub "OAuth Application", which redirects to the address of the main login-entry-point app hosted according to this "development" spring-profile. See https://github.com/settings/developers
+      clientId: ee755dce8c6004f6c7a4 # Replace with clientId of your GitHub "OAuth Application"
+      clientSecret: 2ed7a1d22b44907d216369aa552901dbd4a43baf # Replace with clientSecret of your GitHub "OAuth Application"
+
 ---
 spring:
   profiles: cloud
+
+security:
+  oauth2:
+    client: # Register a new GitHub "OAuth Application", which redirects to the address of the main login-entry-point app hosted according to this "cloud" spring-profile. See https://github.com/settings/developers
+      clientId: 9a6b5fd1d0cb72660103 # Replace with clientId of your GitHub "OAuth Application"
+      clientSecret: 926b6bf8477b76d2f204643e926b48d4a38395be # Replace with clientSecret of your GitHub "OAuth Application"
+
 #eureka:
 #  instance:
 #    nonSecurePort: 80
@@ -37,13 +64,4 @@ spring:
 #    hostname: ${vcap.application.uris[0]}
 #    preferIpAddress: true
 
-security:
-  oauth2:
-    client:
-      clientId: 9a6b5fd1d0cb72660103
-      clientSecret: 926b6bf8477b76d2f204643e926b48d4a38395be
-      accessTokenUri: https://github.com/login/oauth/access_token
-      userAuthorizationUri: https://github.com/login/oauth/authorize
-      clientAuthenticationScheme: form
-    resource:
-      userInfoUri: https://api.github.com/user
+

@@ -7,13 +7,13 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
-@Profile("development")
-@Configuration
-public class DevelopmentSecurityConfig {
-
-    @Bean
-    @LoadBalanced
-    public RestOperations restOperations() {
-        return new RestTemplate();
-    }
-}
+//@Profile("development")
+//@Configuration
+//public class DevelopmentSecurityConfig {
+//
+//    @Bean
+//    @LoadBalanced
+//    public RestOperations restOperations() {
+//        return new RestTemplate();
+//    }
+//}

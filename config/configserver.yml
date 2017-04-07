@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: file://${user.home}/Documents/Professional/Projects/Pivotal/pal/labs/monolith-to-microservices/spring-cloud-config
+          #uri: https://github.com/kwhickey/apps-platform-acceleration-spring-configuration-code.git

@@ -16,15 +16,18 @@ import org.springframework.web.client.RestOperations;
 
 @Configuration
 @EnableOAuth2Sso
-@Profile("!development")
+//@Profile("!development")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests().anyRequest().authenticated()
+            .authorizeRequests()
+                .antMatchers("/actuator", "/env")
+                .permitAll()
+                .anyRequest()
+                    .authenticated()
             .and()
-            .csrf()
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+            .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }
 
     @Bean

@@ -37,7 +37,8 @@ public class ClientConfiguration {
             logger.error(msg);
             throw new RuntimeException(msg);
         }
-        return new AlbumsClient(albumsUrl, restOperations, noLoadBalancedRestTemplate, eurekaClient);
+//        return new AlbumsClient(albumsUrl, restOperations, noLoadBalancedRestTemplate, eurekaClient);
+        return new AlbumsClient(albumsUrl, restOperations);
     }
 
     @Bean
